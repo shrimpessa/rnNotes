@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import { APP_COLORS } from '../APP_COLORS';
 
-export const AppTextInput = props => (
+export const AppMultilineTextInput = props => (
     <TextInput         
         style={{ ...styles.default, ...props.style }}
         value={props.value}
@@ -12,7 +12,7 @@ export const AppTextInput = props => (
         maxLength={props.maxLength}
         autoCorrect={props.autoCorrect}
         autoCapitalize={props.autoCapitalize}
-        keyboardType={props.keyboardType}
+        multiline
     >
         {props.children}
     </TextInput>
@@ -21,9 +21,11 @@ export const AppTextInput = props => (
 const styles = StyleSheet.create({
     default: {
         borderStyle: 'solid',
+        borderRadius: 3,
         fontSize: 14,
-        borderBottomWidth: 1.4,
+        borderWidth: 1.4,
         padding: 10,
-        borderBottomColor: APP_COLORS.BROWN
+        height: 180,
+        borderColor: APP_COLORS.BROWN
     }
 })

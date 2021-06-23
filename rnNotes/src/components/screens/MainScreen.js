@@ -1,19 +1,20 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { AppText } from '../ui/AppText';
+import { AppButton } from '../ui/AppButton';
 
 export const MainScreen = () => {
 
     const navigation = useNavigation()
-    const route = useRoute()
 
     return(
         <View>
-            <Text>MainScreen</Text>
-            <Button 
-                title="Go to note" 
-                onPress={() => navigation.navigate('CreateNoteScreen')}
-            />
+            <AppText>MainScreen</AppText>
+            <AppButton onPress={() => navigation.navigate('CreateNoteScreen')}>
+                Добавить новую заметку
+            </AppButton>
         </View>
     )
 }
