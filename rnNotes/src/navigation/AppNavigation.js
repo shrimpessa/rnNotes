@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { MainScreen } from '../components/screens/MainScreen'
 import { SignInScreen } from '../components/screens/SignInScreen'
 import { CreateNoteScreen } from '../components/screens/CreateNoteScreen'
+import { NotesList } from '../components/NotesList';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -28,12 +29,29 @@ export const AppNavigation = () => {
                     title: "Добавить заметку"
                 }}
             />
+            <Stack.Screen 
+                name="NotesList" 
+                component={NotesList} 
+                options={{
+                    title: "Список заметок"
+                }}
+            />
         </Stack.Navigator>
     )
 
     createNoteAddStack = () => (
         <Stack.Navigator>
-            <Stack.Screen name="Добавить заметку" component={CreateNoteScreen} />
+            <Stack.Screen 
+                name="Добавить заметку" 
+                component={CreateNoteScreen} 
+            />
+            <Stack.Screen 
+                name="NotesList" 
+                component={NotesList} 
+                options={{
+                    title: "Список заметок"
+                }}
+            />
         </Stack.Navigator>
     )
 
