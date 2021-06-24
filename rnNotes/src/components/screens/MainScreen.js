@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { observer } from 'mobx-react';
 
-import { notesStore } from '../../store/notesStore';
-import { AppText } from '../ui/AppText';
 import { AppButton } from '../ui/AppButton';
-import { AppTextInput } from '../ui/AppTextInput';
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { AppFormsContainer } from '../ui/AppFormsContainer';
+import { AppCenteredContainer } from '../ui/AppCenteredContainer';
+import { AppMainTitle } from '../ui/AppMainTitle';
 
 export const MainScreen = observer(({ navigation }) => {
 
-	// addHero = () => {
-	// 	setHeroList(list => [...list, { name, power, id: Math.random() }])
-	// }
-
     return(
-        <View>
-            <AppText>MainScreen</AppText>
-            <AppButton onPress={() => navigation.navigate('CreateNoteScreen')}>
-                Добавить новую заметку
-            </AppButton>
-        </View>
+        <AppFormsContainer>
+            <AppMainTitle>Главная</AppMainTitle>
+            <AppCenteredContainer>
+                <AppButton 
+                    onPress={() => navigation.navigate('CreateNoteScreen')}
+                    btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
+                >
+                    Добавить новую заметку
+                </AppButton>
+            </AppCenteredContainer>
+        </AppFormsContainer>
     )
 })

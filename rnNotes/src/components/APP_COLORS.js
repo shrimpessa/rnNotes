@@ -6,7 +6,7 @@ export const APP_COLORS = {
     LIGHT_GREY: '#757575',
     ORANGE: '#FF6600',
     YELLOW: '#FFCC33',
-    LIGTH_YELLOW: '#FFFFCC',
+    LIGTH_YELLOW: '#ffdc7f',
     LIGHT_ORANGE: '#FF9966',
     BROWN: '#663333'
 }

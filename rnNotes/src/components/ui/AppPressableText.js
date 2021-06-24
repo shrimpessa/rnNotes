@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable } from 'react-native';
 
 import { APP_COLORS } from '../APP_COLORS';
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
 import { AppText } from './AppText'
 
 export const AppPressableText = ({ onPress, onLongPress, content, description }) => {
@@ -11,9 +12,9 @@ export const AppPressableText = ({ onPress, onLongPress, content, description })
 			onLongPress={onLongPress}
 			style={({ pressed }) => [
 				{
-					backgroundColor: pressed ? APP_COLORS.ORANGE : APP_COLORS.LIGHT_ORANGE,
-					paddingLeft: 16,
-					paddingVertical: 16,
+					backgroundColor: pressed ? APP_COLORS.YELLOW : APP_COLORS.LIGTH_YELLOW,
+					paddingLeft: LAYOUT_BLANKS.innerPadding,
+					paddingVertical: LAYOUT_BLANKS.innerPadding,
 					alignContent: 'center',
 					justifyContent: 'center'
 				}

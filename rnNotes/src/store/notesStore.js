@@ -15,6 +15,8 @@ class Notes {
 
     addNote(note) {
         this.allNotes = [...this.allNotes, { ...note, id: Math.random() }]
+        console.log(note)
+        console.log(this.allNotes)
     }
 
     deleteNote(id) {

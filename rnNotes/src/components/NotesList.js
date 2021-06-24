@@ -16,9 +16,9 @@ export const NotesList = observer(() => {
             ItemSeparatorComponent={() => <ListSeparator />}
             renderItem={({ item }) => (
                 <AppPressableText
-                    content={`Name: ${item.name}`}
-                    onLongPress={() => notesStore.deleteNote(item.id)}
-                    description={`Power: ${item.power}`}
+                    content={`Заголовок: ${item.noteName}`}
+                    description={`Текст: ${item.noteText}`}
+                    onLongPress={() => notesStore.deleteNote(item.id)}        
                 />
             )}
         />
