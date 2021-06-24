@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react';
 
+import { notesStore } from '../../store/notesStore';
 import { AppText } from '../ui/AppText';
 import { AppButton } from '../ui/AppButton';
+import { AppTextInput } from '../ui/AppTextInput';
 
-export const MainScreen = () => {
+export const MainScreen = observer(({ navigation }) => {
 
-    const navigation = useNavigation()
+	// addHero = () => {
+	// 	setHeroList(list => [...list, { name, power, id: Math.random() }])
+	// }
 
     return(
         <View>
@@ -17,4 +21,4 @@ export const MainScreen = () => {
             </AppButton>
         </View>
     )
-}
+})

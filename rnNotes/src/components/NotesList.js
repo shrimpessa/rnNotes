@@ -1,17 +1,26 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { observer } from 'mobx-react';
+import { FlatList } from 'react-native';
 
-export const NotesList = () => {
+import { ListSeparator } from './ui/ListSeparator';
+import { AppPressableText } from './ui/AppPressableText'
+import { notesStore } from '../store/notesStore';
 
-    const navigation = useNavigation()
-    const route = useRoute()
+export const NotesList = observer(() => {
 
-    return(
-        <View>
-            <Text>NotesList</Text>
-            <Text>NotesList</Text>
-            <Text>NotesList</Text>
-        </View>
-    )
-}
+	return (
+		<FlatList
+            data={notesStore.allNotes}
+            keyExtractor={(item) => item.id}
+            style={{ width: '100%', marginTop: 20, paddingBottom: 10 }}
+            ItemSeparatorComponent={() => <ListSeparator />}
+            renderItem={({ item }) => (
+                <AppPressableText
+                    content={`Name: ${item.name}`}
+                    onLongPress={() => notesStore.deleteNote(item.id)}
+                    description={`Power: ${item.power}`}
+                />
+            )}
+        />
+	);
+})
