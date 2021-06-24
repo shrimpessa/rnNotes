@@ -7,7 +7,7 @@ export const AppMultilineTextInput = props => {
     const styles = StyleSheet.create({
         default: {
             borderStyle: 'solid',
-            borderRadius: 3,
+            borderRadius: LAYOUT_BLANKS.borderRadius,
             fontSize: 14,
             borderWidth: LAYOUT_BLANKS.borderBottomWidth,
             padding: 10,

@@ -8,5 +8,6 @@ export const APP_COLORS = {
     YELLOW: '#FFCC33',
     LIGTH_YELLOW: '#ffdc7f',
     LIGHT_ORANGE: '#FF9966',
-    BROWN: '#663333'
+    BROWN: '#663333',
+    WOODEN: '#fff3d4'
 }

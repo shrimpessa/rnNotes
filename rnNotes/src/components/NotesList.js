@@ -1,26 +1,48 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet, Dimensions, View } from 'react-native';
 
-import { ListSeparator } from './ui/ListSeparator';
-import { AppPressableText } from './ui/AppPressableText'
+import { AppListSeparator } from './ui/AppListSeparator';
+import { PressableText } from './PressableText'
 import { notesStore } from '../store/notesStore';
+import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
+import { AppCenteredContainer } from '../components/ui/AppCenteredContainer';
+import { NothingIsHere } from './NothingIsHere'
 
 export const NotesList = observer(() => {
 
-	return (
-		<FlatList
+    const notesList = (
+        <FlatList
             data={notesStore.allNotes}
             keyExtractor={(item) => item.id}
-            style={{ width: '100%', marginTop: 20, paddingBottom: 10 }}
-            ItemSeparatorComponent={() => <ListSeparator />}
+            style={styles.list}
+            ItemSeparatorComponent={() => <AppListSeparator />}
             renderItem={({ item }) => (
-                <AppPressableText
-                    content={`Заголовок: ${item.noteName}`}
-                    description={`Текст: ${item.noteText}`}
+                <PressableText
+                    content={item.noteName}
+                    description={item.noteText}
                     onLongPress={() => notesStore.deleteNote(item.id)}        
                 />
             )}
         />
+    )
+
+	return (
+        <View style={{ height: '100%' }}>
+        {notesStore.count 
+            ? <AppCenteredContainer style={{ height: '100%' }}>
+                {notesList}
+            </AppCenteredContainer>
+            : <NothingIsHere />
+        }
+        </View>
 	);
+})
+
+const styles = StyleSheet.create({
+    list: {
+        width: Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire, 
+        paddingTop: LAYOUT_BLANKS.innerPadding, 
+        paddingBottom: LAYOUT_BLANKS.innerPadding
+    }
 })

@@ -5,5 +5,6 @@ export const LAYOUT_BLANKS = {
     outerPadding: 8,
     widthEntire: 0.94, // percent
     widthHalf: 0.44, // percent
-    borderBottomWidth: 1.4
+    borderBottomWidth: 1.4,
+    borderRadius: 6
 }
