@@ -24,9 +24,6 @@ class Notes {
     }
 
     editNote(id, newNoteName, newNoteText) {
-        console.log(id)
-        console.log(newNoteName)
-        console.log(newNoteText)
         this.allNotes.map(note => {
             if (note.id === id) {
                 note.noteName = newNoteName,
@@ -34,7 +31,6 @@ class Notes {
             }
             return note
         })
-        console.log(this.allNotes)
     }
 
     getNoteByID(id) {
