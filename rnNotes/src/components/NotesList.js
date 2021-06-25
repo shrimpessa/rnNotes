@@ -11,6 +11,10 @@ import { NothingIsHere } from './NothingIsHere'
 
 export const NotesList = observer(() => {
 
+    onNotePress = id => {
+        console.log(id)
+    }
+
     const notesList = (
         <FlatList
             data={notesStore.allNotes}
@@ -21,6 +25,7 @@ export const NotesList = observer(() => {
                 <PressableText
                     content={item.noteName}
                     description={item.noteText}
+                    onPress={() => onNotePress(item.id)}
                     onLongPress={() => notesStore.deleteNote(item.id)}        
                 />
             )}
