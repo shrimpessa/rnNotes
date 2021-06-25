@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-import { FlatList, StyleSheet, Dimensions, View } from 'react-native';
+import { 
+    FlatList, 
+    StyleSheet, 
+    Dimensions, 
+    View, 
+    Alert
+} from 'react-native';
 
 import { AppListSeparator } from './ui/AppListSeparator';
 import { PressableText } from './PressableText'
@@ -10,6 +16,27 @@ import { AppCenteredContainer } from '../components/ui/AppCenteredContainer';
 import { NothingIsHere } from './NothingIsHere'
 
 export const NotesList = observer(({ navigation }) => {
+
+    const removeNoteHandler = id => {
+        Alert.alert(
+            "Удаление заметки",
+            "Вы точно хотите удалить эту заметку?",
+            [
+              {
+                text: "Отменить",
+                style: "cancel",
+              },
+              {
+                text: "Удалить",                
+                style: "destructive",
+                onPress: () => {
+                    notesStore.deleteNote(id)
+                },
+              },
+            ],
+            { cancelable: false }
+        );
+    }
 
     const notesList = (
         <FlatList
@@ -24,7 +51,7 @@ export const NotesList = observer(({ navigation }) => {
                     onPress={() => navigation.navigate('Note', {
 						noteID: item.id,
 					})}
-                    onLongPress={() => notesStore.deleteNote(item.id)}        
+                    onLongPress={() => removeNoteHandler(item.id)}        
                 />
             )}
         />
