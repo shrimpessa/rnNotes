@@ -23,13 +23,6 @@ export const AppNavigation = () => {
                 }}
             />
             <Stack.Screen 
-                name="CreateNoteScreen" 
-                component={CreateNoteScreen} 
-                options={{
-                    title: "Добавить заметку"
-                }}
-            />
-            <Stack.Screen 
                 name="NotesList" 
                 component={NotesList} 
                 options={{
@@ -57,6 +50,13 @@ export const AppNavigation = () => {
                 component={NotesList} 
                 options={{
                     title: "Список заметок"
+                }}
+            />
+            <Stack.Screen 
+                name="Note" 
+                component={Note} 
+                options={{
+                    title: "Заметка"
                 }}
             />
         </Stack.Navigator>

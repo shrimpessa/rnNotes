@@ -1,29 +1,37 @@
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { APP_COLORS } from '../components/APP_COLORS'
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
-export const Note = () => {
+import { APP_COLORS } from '../components/APP_COLORS';
+import { AppMainTitle } from './ui/AppMainTitle';
+import { AppText } from './ui/AppText';
+import { notesStore } from '../store/notesStore';
+import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
+
+export const Note = ({ route }) => {
+    // Получить заметку по переданному id
+    const thisNote = notesStore.getNoteByID(route.params.noteID)
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>
-                Заметка
-            </Text>
+            <AppMainTitle>{thisNote.map(note => note.noteName)}</AppMainTitle>
+            <View style={styles.description}>
+                <AppText style={{fontSize: 16, margin: LAYOUT_BLANKS.outerPadding}}>
+                    {thisNote.map(note => note.noteText)}
+                </AppText>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        backgroundColor: APP_COLORS.WHITE
+    container: { 
+        height: '100%',
+        backgroundColor: APP_COLORS.LIGTH_YELLOW,
+        paddingHorizontal: LAYOUT_BLANKS.innerPadding
     },
-    title: {
-        padding: 10,
-        fontSize: 18,
-        color: APP_COLORS.BROWN,
-        fontWeight: '700',
-        marginBottom: 10
-    },
+	description: {
+		marginTop: LAYOUT_BLANKS.outerPadding, 
+		borderRadius: LAYOUT_BLANKS.borderRadius, 
+		backgroundColor: APP_COLORS.WOODEN
+	}
 })

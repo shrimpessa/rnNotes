@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 import { FlatList, StyleSheet, Dimensions, View } from 'react-native';
 
@@ -9,11 +9,7 @@ import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
 import { AppCenteredContainer } from '../components/ui/AppCenteredContainer';
 import { NothingIsHere } from './NothingIsHere'
 
-export const NotesList = observer(() => {
-
-    onNotePress = id => {
-        console.log(id)
-    }
+export const NotesList = observer(({ navigation }) => {
 
     const notesList = (
         <FlatList
@@ -25,7 +21,9 @@ export const NotesList = observer(() => {
                 <PressableText
                     content={item.noteName}
                     description={item.noteText}
-                    onPress={() => onNotePress(item.id)}
+                    onPress={() => navigation.navigate('Note', {
+						noteID: item.id,
+					})}
                     onLongPress={() => notesStore.deleteNote(item.id)}        
                 />
             )}

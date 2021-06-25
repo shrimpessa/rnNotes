@@ -9,6 +9,7 @@ class Notes {
             allNotes: observable,
             addNote: action,
             deleteNote: action,
+            getNoteByID: action,
             count: computed
         })
     }
@@ -21,6 +22,15 @@ class Notes {
 
     deleteNote(id) {
         this.allNotes = this.allNotes.filter(note => note.id !== id)
+    }
+
+    getNoteByID(id) {
+        const thisNote = this.allNotes.filter(note => {
+            if (note.id === id) {
+                return note
+            }
+        })
+        return thisNote
     }
 
     get count() {
