@@ -9,6 +9,7 @@ class Notes {
             allNotes: observable,
             addNote: action,
             deleteNote: action,
+            editNote: action,
             getNoteByID: action,
             count: computed
         })
@@ -16,12 +17,24 @@ class Notes {
 
     addNote(note) {
         this.allNotes = [...this.allNotes, { ...note, id: Date.now() }]
-        console.log(note)
-        console.log(this.allNotes)
     }
 
     deleteNote(id) {
         this.allNotes = this.allNotes.filter(note => note.id !== id)
+    }
+
+    editNote(id, newNoteName, newNoteText) {
+        console.log(id)
+        console.log(newNoteName)
+        console.log(newNoteText)
+        this.allNotes.map(note => {
+            if (note.id === id) {
+                note.noteName = newNoteName,
+                note.noteText = newNoteText
+            }
+            return note
+        })
+        console.log(this.allNotes)
     }
 
     getNoteByID(id) {
