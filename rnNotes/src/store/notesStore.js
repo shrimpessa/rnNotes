@@ -14,7 +14,7 @@ class Notes {
     }
 
     addNote(note) {
-        this.allNotes = [...this.allNotes, { ...note, id: Math.random() }]
+        this.allNotes = [...this.allNotes, { ...note, id: Date.now() }]
         console.log(note)
         console.log(this.allNotes)
     }
