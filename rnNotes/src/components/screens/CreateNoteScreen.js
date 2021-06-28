@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { observer } from 'mobx-react';
 
 import { notesStore } from '../../store/notesStore';
@@ -16,6 +16,29 @@ export const CreateNoteScreen =  observer(({ navigation }) => {
 
     const [noteName, setNoteName] = useState('')
 	const [noteText, setNoteText] = useState('')
+
+    const noteSaveHandler = (noteName, noteText) => {
+        if (noteName.trim().length < 3) {
+            Alert.alert(
+                "Ошибка!", 
+                `Минимальная длина заголовка 3 символа. Вы ввели ${
+                    noteName.trim().length
+                } символ(-ов).`
+            )
+        } else if (noteText.trim().length < 10) {
+            Alert.alert(
+                "Ошибка!", 
+                `Минимальная длина текста заметки 10 символа. Вы ввели ${
+                    noteText.trim().length
+                } символ(-ов).`
+            )
+        } else {
+            notesStore.addNote({ noteName, noteText })
+            Alert.alert(
+                "Заметка добавлена!"
+            )
+        }
+    }
 
     return (
         <View style={{ backgroundColor: APP_COLORS.WHITE, height: '100%'}}>
@@ -38,7 +61,7 @@ export const CreateNoteScreen =  observer(({ navigation }) => {
                 </AppCenteredContainer>
                 <View style={styles.buttons}>
                     <AppButton
-                        onPress={() => notesStore.addNote({ noteName, noteText })}
+                        onPress={() => noteSaveHandler(noteName, noteText)}
                         btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthHalf}
                     >
                         Добавить
