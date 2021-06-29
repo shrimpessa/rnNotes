@@ -8,15 +8,15 @@ import {
     Alert
 } from 'react-native';
 
-import { AppListSeparator } from './ui/AppListSeparator';
-import { PressableText } from './PressableText'
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
-import { AppCenteredContainer } from '../components/ui/AppCenteredContainer';
-import { NothingIsHere } from './NothingIsHere';
-import { AppLoader } from './ui/AppLoader';
+import { AppListSeparator } from '../ui/AppListSeparator';
+import { PressableText } from '../PressableText';
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { AppCenteredContainer } from '../ui/AppCenteredContainer';
+import { NothingIsHere } from '../NothingIsHere';
+import { AppLoader } from '../ui/AppLoader';
 
-import { notesStore } from '../store/notesStore';
-import { getNotes } from '../store/notesActions';
+import { notesStore } from '../../store/notesStore';
+import { getNotes } from '../../store/notesActions';
 
 export const NotesList = observer(({ navigation }) => {
 

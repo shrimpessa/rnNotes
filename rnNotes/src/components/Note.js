@@ -8,7 +8,7 @@ import { AppMainTitle } from './ui/AppMainTitle';
 import { AppText } from './ui/AppText';
 import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
 import { AppButton } from './ui/AppButton';
-import { EditModal } from './EditModal';
+import { EditModal } from './screens/EditModal';
 import { TitleContainer } from './ui/TitleContainer';
 
 import { notesStore } from '../store/notesStore';
@@ -66,7 +66,6 @@ export const Note = ({ route, navigation }) => {
 
             <EditModal 
                 noteID={route.params.noteID}
-                value={getNoteByID()}
                 isModalVisible={isModalVisible} 
                 onCancel={() => setIsModalVisible(false)}
             />

@@ -3,21 +3,21 @@ import { StyleSheet, Dimensions, Modal, Alert, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
 
-import { APP_COLORS } from './APP_COLORS';
-import { AppButton } from './ui/AppButton';
-import { AppTextInput } from './ui/AppTextInput';
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
-import { AppText } from './ui/AppText';
-import { AppMainTitle } from './ui/AppMainTitle';
-import { AppCenteredContainer } from './ui/AppCenteredContainer';
-import { AppMultilineTextInput } from './ui/AppMultilineTextInput';
-import { TitleContainer } from './ui/TitleContainer';
-import { AppButtonsContainer } from './ui/AppButtonsContainer';
+import { APP_COLORS } from '../APP_COLORS';
+import { AppButton } from '../ui/AppButton';
+import { AppTextInput } from '../ui/AppTextInput';
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { AppText } from '../ui/AppText';
+import { AppMainTitle } from '../ui/AppMainTitle';
+import { AppCenteredContainer } from '../ui/AppCenteredContainer';
+import { AppMultilineTextInput } from '../ui/AppMultilineTextInput';
+import { TitleContainer } from '../ui/TitleContainer';
+import { AppButtonsContainer } from '../ui/AppButtonsContainer';
 
-import { notesStore } from '../store/notesStore';
-import { getNoteByID } from '../store/notesActions';
+import { notesStore } from '../../store/notesStore';
+import { getNoteByID } from '../../store/notesActions';
 
-export const EditModal = ({ noteID, isModalVisible, value, onCancel }) => {
+export const EditModal = ({ noteID, isModalVisible, onCancel }) => {
 
     const [editedNoteName, setEditedNoteName] = useState('')
 	const [editedNoteText, setEditedNoteText] = useState('')

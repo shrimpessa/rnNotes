@@ -9,7 +9,7 @@ Icon.loadFont();
 import { MainScreen } from '../components/screens/MainScreen'
 import { SignInScreen } from '../components/screens/SignInScreen'
 import { CreateNoteScreen } from '../components/screens/CreateNoteScreen'
-import { NotesList } from '../components/NotesList';
+import { NotesList } from '../components/screens/NotesList';
 import { Note } from '../components/Note';
 import { APP_COLORS } from '../components/APP_COLORS';
 import { LAYOUT_BLANKS } from '../components/LAYOUT_BLANKS';
