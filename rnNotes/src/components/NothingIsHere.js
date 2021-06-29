@@ -8,7 +8,6 @@ export const NothingIsHere = () => {
             <Text style={styles.title}>
                 Пока что здесь ничего нет!
             </Text>
-            {/* <AntDesign name="smileo" size={100} color={APP_COLORS.BROWN} /> */}
         </View>
     )
 }
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         color: APP_COLORS.BROWN,
-        fontWeight: '700',
+        fontWeight: '600',
         marginBottom: 10
     },
 })

@@ -17,7 +17,8 @@ export const AppMainTitle = props => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: LAYOUT_BLANKS.outerPadding,
+        paddingVertical: LAYOUT_BLANKS.outerPadding,
+        marginTop: LAYOUT_BLANKS.outerPadding,
         alignItems: 'flex-start'
     },
     title: {

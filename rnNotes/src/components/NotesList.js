@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { 
     FlatList, 
@@ -10,12 +10,23 @@ import {
 
 import { AppListSeparator } from './ui/AppListSeparator';
 import { PressableText } from './PressableText'
-import { notesStore } from '../store/notesStore';
 import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
 import { AppCenteredContainer } from '../components/ui/AppCenteredContainer';
-import { NothingIsHere } from './NothingIsHere'
+import { NothingIsHere } from './NothingIsHere';
+import { AppLoader } from './ui/AppLoader';
+
+import { notesStore } from '../store/notesStore';
+import { getNotes } from '../store/notesActions';
 
 export const NotesList = observer(({ navigation }) => {
+
+    const [isLoad, setIsLoad] = useState(false)
+
+    useEffect(() => {
+        setIsLoad(false) // начало загрузки
+        getNotes()
+        setIsLoad(true) // конец загрузки
+    }, [])
 
     const removeNoteHandler = id => {
         Alert.alert(
@@ -46,8 +57,8 @@ export const NotesList = observer(({ navigation }) => {
             ItemSeparatorComponent={() => <AppListSeparator />}
             renderItem={({ item }) => (
                 <PressableText
-                    content={item.noteName}
-                    description={item.noteText}
+                    content={item.title}
+                    description={item.body}
                     onPress={() => navigation.navigate('Note', {
 						noteID: item.id,
 					})}
@@ -56,15 +67,25 @@ export const NotesList = observer(({ navigation }) => {
             )}
         />
     )
+    // что рендерить:
+    // 1. эран "ничего нет"
+    // 2. список заметок
+    // 3. индикатор загрузки
+    const renderHandler = () => {
+        if (notesStore.count == 0) {
+            return <NothingIsHere />
+        } else if (isLoad) {
+            return <AppCenteredContainer style={{ height: '100%' }}>
+                {notesList}
+            </AppCenteredContainer>
+        } else {
+            return <AppLoader />
+        }
+    }
 
 	return (
         <View style={{ height: '100%' }}>
-        {notesStore.count 
-            ? <AppCenteredContainer style={{ height: '100%' }}>
-                {notesList}
-            </AppCenteredContainer>
-            : <NothingIsHere />
-        }
+            {renderHandler()}
         </View>
 	);
 })

@@ -13,36 +13,38 @@ import { AppCenteredContainer } from './ui/AppCenteredContainer';
 import { AppMultilineTextInput } from './ui/AppMultilineTextInput';
 import { TitleContainer } from './ui/TitleContainer';
 import { AppButtonsContainer } from './ui/AppButtonsContainer';
+
 import { notesStore } from '../store/notesStore';
+import { getNoteByID } from '../store/notesActions';
 
 export const EditModal = ({ noteID, isModalVisible, value, onCancel }) => {
 
-    const [newNoteName, setNewNoteName] = useState('')
-	const [newNoteText, setNewNoteText] = useState('')
+    const [editedNoteName, setEditedNoteName] = useState('')
+	const [editedNoteText, setEditedNoteText] = useState('')
 
-    // забираем старые значения полей формы
     useEffect(() => {
-        setNewNoteName(value.map(note => note.noteName).join())
-        setNewNoteText(value.map(note => note.noteText).join())
-    }, []);
+        const result = getNoteByID(noteID)
+        setEditedNoteName(result.title)
+        setEditedNoteText(result.body)
+    }, [])
 
     const saveHandler = () => {
-        if (newNoteName.trim().length < 3) {
+        if (editedNoteName.trim().length < 3) {
             Alert.alert(
                 "Ошибка!", 
                 `Минимальная длина заголовка 3 символа. Вы ввели ${
-                    newNoteName.trim().length
+                    editedNoteName.trim().length
                 } символ(-ов).`
             )
-        } else if (newNoteText.trim().length < 10) {
+        } else if (editedNoteText.trim().length < 10) {
             Alert.alert(
                 "Ошибка!", 
                 `Минимальная длина текста заметки 10 символа. Вы ввели ${
-                    newNoteText.trim().length
+                    editedNoteText.trim().length
                 } символ(-ов).`
             )
         } else {
-            notesStore.editNote( noteID, newNoteName, newNoteText )
+            notesStore.patchNote( noteID, editedNoteName, editedNoteText )
             onCancel()
         }
     }
@@ -62,16 +64,16 @@ export const EditModal = ({ noteID, isModalVisible, value, onCancel }) => {
                 <AppCenteredContainer>
                     <AppTextInput
                         style={styles.inputs}
-                        value={newNoteName}
+                        value={editedNoteName}
                         placeholder='Заголовок'
-                        onChangeText={newNoteName => setNewNoteName(newNoteName)}
+                        onChangeText={newNoteName => setEditedNoteName(newNoteName)}
                         inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                     />
                     <AppMultilineTextInput
                         style={styles.inputs}
-                        value={newNoteText}
+                        value={editedNoteText}
                         placeholder='Текст заметки'
-                        onChangeText={newNoteText => setNewNoteText(newNoteText)}
+                        onChangeText={newNoteText => setEditedNoteText(newNoteText)}
                         inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                         inputHeight={Dimensions.get('window').height * 0.3}
                     />
