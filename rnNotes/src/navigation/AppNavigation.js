@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 Icon.loadFont();
 
-import { MainScreen } from '../components/screens/MainScreen'
-import { SignInScreen } from '../components/screens/SignInScreen'
-import { CreateNoteScreen } from '../components/screens/CreateNoteScreen'
+import { MainScreen } from '../components/screens/MainScreen';
+import { SignInSignUpScreen } from '../components/screens/SignInSignUpScreen';
+import { CreateEditScreen } from '../components/screens/CreateEditScreen';
 import { NotesList } from '../components/screens/NotesList';
 import { Note } from '../components/Note';
 import { APP_COLORS } from '../components/APP_COLORS';
@@ -55,7 +55,7 @@ export const AppNavigation = ({ navigation }) => {
             />
             <Stack.Screen 
                 name="CreateNote" 
-                component={CreateNoteScreen} 
+                component={CreateEditScreen} 
                 options={{
                     title: "Добавить заметку"
                 }}
@@ -67,7 +67,7 @@ export const AppNavigation = ({ navigation }) => {
         <Stack.Navigator>
             <Stack.Screen 
                 name="Добавить заметку" 
-                component={CreateNoteScreen} 
+                component={CreateEditScreen} 
             />
             <Stack.Screen 
                 name="NotesList" 
@@ -88,7 +88,7 @@ export const AppNavigation = ({ navigation }) => {
 
     createLogInStack = () => (
         <Stack.Navigator>
-            <Stack.Screen name="LogIn" component={SignInScreen} />
+            <Stack.Screen name="Вход" component={SignInSignUpScreen} />
         </Stack.Navigator>
     ) 
 
