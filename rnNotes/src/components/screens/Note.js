@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from 'react';
+// Экран для отображения отдельной заметки
+import React from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
+import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
 
-import { APP_COLORS } from '../components/APP_COLORS';
-import { AppMainTitle } from './ui/AppMainTitle';
-import { AppText } from './ui/AppText';
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
-import { AppButton } from './ui/AppButton';
-import { EditModal } from './screens/EditModal';
-import { TitleContainer } from './ui/TitleContainer';
+import { AppMainTitle } from '../ui/AppMainTitle';
+import { AppText } from '../ui/AppText';
+import { AppButton } from '../ui/AppButton';
+import { TitleContainer } from '../ui/TitleContainer';
 
-import { notesStore } from '../store/notesStore';
-import { getNoteByID } from '../store/notesActions';
+import { APP_COLORS } from '../APP_COLORS';
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { TEXT_STUBS } from '../TEXT_STUBS';
+import { formType_edit } from '../FORM_TYPES';
 
-export const Note = ({ route, navigation }) => {
+import { notesStore } from '../../store/notesStore';
+import { getNoteByID } from '../../store/notesActions';
 
-    const [isModalVisible, setIsModalVisible] = useState(false)
-
-    useEffect(() => {
-        getNoteByID(route.params.noteID)
-    }, [])
+export const Note = observer(({ route, navigation }) => {
 
     const removeNoteHandler = () => {
         Alert.alert(
-            "Удаление заметки",
-            "Вы точно хотите удалить эту заметку?",
+            TEXT_STUBS.text_deleteNote,
+            TEXT_STUBS.text_confirmDeletion,
             [
               {
                 text: "Отменить",
@@ -52,7 +50,10 @@ export const Note = ({ route, navigation }) => {
                     name="create-outline" 
                     size={30} 
                     color={APP_COLORS.BROWN} 
-                    onPress={() => setIsModalVisible(true)}
+                    onPress={() => navigation.navigate('CreateEdit', {
+                        formType: formType_edit,
+                        noteID: route.params.noteID
+                    })}
                 />
             </TitleContainer>
             <View style={styles.description}>
@@ -63,15 +64,9 @@ export const Note = ({ route, navigation }) => {
             <AppButton onPress={() => removeNoteHandler()}>
                 Удалить
             </AppButton>
-
-            <EditModal 
-                noteID={route.params.noteID}
-                isModalVisible={isModalVisible} 
-                onCancel={() => setIsModalVisible(false)}
-            />
         </View>
     )
-}
+})
 
 const styles = StyleSheet.create({
     container: { 

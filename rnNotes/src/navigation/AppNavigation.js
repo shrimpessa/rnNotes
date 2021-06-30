@@ -1,3 +1,4 @@
+// Навигация приложения
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,7 +11,7 @@ import { MainScreen } from '../components/screens/MainScreen';
 import { SignInSignUpScreen } from '../components/screens/SignInSignUpScreen';
 import { CreateEditScreen } from '../components/screens/CreateEditScreen';
 import { NotesList } from '../components/screens/NotesList';
-import { Note } from '../components/Note';
+import { Note } from '../components/screens/Note';
 import { APP_COLORS } from '../components/APP_COLORS';
 import { LAYOUT_BLANKS } from '../components/LAYOUT_BLANKS';
 
@@ -23,7 +24,7 @@ export const AppNavigation = ({ navigation }) => {
             <Stack.Screen 
                 name="MainScreen" 
                 component={MainScreen} 
-                options={({route, navigation}) => ({
+                options={({ navigation }) => ({
                     title: "Мои заметки",
                     headerRight: () => (
                         <Icon 
@@ -33,7 +34,9 @@ export const AppNavigation = ({ navigation }) => {
                             style={{
                                 paddingRight: LAYOUT_BLANKS.outerPadding
                             }}
-                            onPress={() => navigation.navigate('CreateNote')}
+                            onPress={() => navigation.navigate('CreateEdit', {
+                                formType: 'create',
+                            })}
                         />
                      )
                    }
@@ -54,33 +57,10 @@ export const AppNavigation = ({ navigation }) => {
                 }}
             />
             <Stack.Screen 
-                name="CreateNote" 
+                name="CreateEdit" 
                 component={CreateEditScreen} 
                 options={{
-                    title: "Добавить заметку"
-                }}
-            />
-        </Stack.Navigator>
-    )
-
-    createNoteAddStack = () => (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="Добавить заметку" 
-                component={CreateEditScreen} 
-            />
-            <Stack.Screen 
-                name="NotesList" 
-                component={NotesList} 
-                options={{
-                    title: "Список заметок"
-                }}
-            />
-            <Stack.Screen 
-                name="Note" 
-                component={Note} 
-                options={{
-                    title: "Заметка"
+                    title: "Работа с заметкой"
                 }}
             />
         </Stack.Navigator>
@@ -99,17 +79,7 @@ export const AppNavigation = ({ navigation }) => {
                     name="Main" 
                     children={createHomeStack}
                     options={{
-                        title: "Мои заметки",
-                        // headerRight: () => (
-                        //     <Icon name="home" size={30} color="#900" />
-                        // )
-                    }}
-                />
-                <Drawer.Screen
-                    name="СreateNote" 
-                    children={createNoteAddStack} 
-                    options={{
-                        title: "Добавить заметку"
+                        title: "Мои заметки"
                     }}
                 />
                 <Drawer.Screen

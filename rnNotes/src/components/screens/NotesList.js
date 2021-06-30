@@ -1,3 +1,4 @@
+// Список всех заметок
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { 
@@ -10,10 +11,12 @@ import {
 
 import { AppListSeparator } from '../ui/AppListSeparator';
 import { PressableText } from '../PressableText';
-import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
 import { AppCenteredContainer } from '../ui/AppCenteredContainer';
 import { NothingIsHere } from '../NothingIsHere';
 import { AppLoader } from '../ui/AppLoader';
+
+import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { TEXT_STUBS } from '../TEXT_STUBS';
 
 import { notesStore } from '../../store/notesStore';
 import { getNotes } from '../../store/notesActions';
@@ -30,8 +33,8 @@ export const NotesList = observer(({ navigation }) => {
 
     const removeNoteHandler = id => {
         Alert.alert(
-            "Удаление заметки",
-            "Вы точно хотите удалить эту заметку?",
+            TEXT_STUBS.text_deleteNote,
+            TEXT_STUBS.text_confirmDeletion,
             [
               {
                 text: "Отменить",
@@ -67,10 +70,7 @@ export const NotesList = observer(({ navigation }) => {
             )}
         />
     )
-    // что рендерить:
-    // 1. эран "ничего нет"
-    // 2. список заметок
-    // 3. индикатор загрузки
+    
     const renderHandler = () => {
         if (notesStore.count == 0) {
             return <NothingIsHere />

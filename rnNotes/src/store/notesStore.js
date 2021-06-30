@@ -28,7 +28,7 @@ class Notes {
     // добавить новую заметку
     async addNote(note) {
         try {
-            // local store
+            // temporary store
             this.allNotes = [...this.allNotes, { ...note, id: Date.now() }]
             // back
             await link.post(`/tasks`, {
@@ -41,7 +41,7 @@ class Notes {
     }
     // удалить заметку
     async deleteNote(id) {
-        // local store
+        // temporary store
         this.allNotes = this.allNotes.filter(note => note.id !== id)
         // back
         try {
@@ -53,7 +53,7 @@ class Notes {
     // изменить заметку
     async patchNote(id, newNoteName, newNoteText) {
         try {
-            // local store
+            // temporary store
             this.allNotes.map(note => {
                 if (note.id === id) {
                     note.noteName = newNoteName,

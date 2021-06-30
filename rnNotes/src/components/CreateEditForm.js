@@ -7,33 +7,46 @@ import { AppMainTitle } from './ui/AppMainTitle';
 import { AppTextInput } from './ui/AppTextInput';
 import { AppMultilineTextInput } from './ui/AppMultilineTextInput';
 import { AppButton } from './ui/AppButton';
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
 
-export const CreateEditForm = ({ screenTitle, setNoteName, setNoteText }) => {
+import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
+import { formType_edit } from './FORM_TYPES';
+import { TEXT_STUBS } from './TEXT_STUBS';
+
+export const CreateEditForm = ({ formType, onChangeName, onChangeText, saveHandler, noteName, noteText }) => {
     return (
         <AppFormsContainer>
-            <AppMainTitle>{screenTitle}</AppMainTitle>
+            <AppMainTitle>
+                {formType === formType_edit 
+                    ? TEXT_STUBS.text_editNote 
+                    : TEXT_STUBS.text_createNote
+                }
+            </AppMainTitle>
             <AppCenteredContainer>
                 <AppTextInput
                     style={styles.inputs}
+                    value={noteName}
                     placeholder='Заголовок'
-                    onChangeText={noteName => setNoteName(noteName)}
+                    onChangeText={noteName => onChangeName(noteName)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
                 <AppMultilineTextInput
                     style={styles.inputs}
+                    value={noteText}
                     placeholder='Текст заметки'
-                    onChangeText={noteText => setNoteText(noteText)}
+                    onChangeText={noteText => onChangeText(noteText)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                     inputHeight={Dimensions.get('window').height * 0.3}
                 />
             </AppCenteredContainer>
             <View style={styles.buttons}>
                 <AppButton
-                    // onPress={() => noteSaveHandler(noteName, noteText)}
+                    onPress={() => saveHandler()}
                     btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 >
-                    Добавить
+                    {formType === formType_edit 
+                        ? TEXT_STUBS.text_saveChanges 
+                        : TEXT_STUBS.text_add
+                    }
                 </AppButton>
             </View>
         </AppFormsContainer>
