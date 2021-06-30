@@ -67,6 +67,7 @@ class Notes {
                 "body": newNoteText,
                 "id": id
             })
+            console.log(this.allNotes)
         } catch (error) {
             console.log(error.message)
         }

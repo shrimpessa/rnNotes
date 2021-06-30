@@ -1,18 +1,16 @@
 // Экран для создания и редактирования заметки
 import React, { useState, useEffect } from 'react';
 import { View, Alert } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import { CreateEditForm } from '../CreateEditForm';
 
 import { APP_COLORS } from '../APP_COLORS';
 import { TEXT_STUBS } from '../TEXT_STUBS';
 import { formType_create, formType_edit } from '../FORM_TYPES';
-
-import { notesStore } from '../../store/notesStore';
 import { getNoteByID } from '../../store/notesActions';
 
-export const CreateEditScreen =  observer(({ route, navigation }) => {
+export const CreateEditScreen = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
     const [noteName, setNoteName] = useState('')
 	const [noteText, setNoteText] = useState('')
@@ -78,4 +76,4 @@ export const CreateEditScreen =  observer(({ route, navigation }) => {
             />
         </View>
     )
-})
+}))

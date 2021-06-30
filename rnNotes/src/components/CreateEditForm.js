@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 
 import { AppFormsContainer } from './ui/AppFormsContainer';

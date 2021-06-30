@@ -1,7 +1,7 @@
 // Экран для отображения отдельной заметки
 import React from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
 
@@ -14,11 +14,9 @@ import { APP_COLORS } from '../APP_COLORS';
 import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
 import { TEXT_STUBS } from '../TEXT_STUBS';
 import { formType_edit } from '../FORM_TYPES';
-
-import { notesStore } from '../../store/notesStore';
 import { getNoteByID } from '../../store/notesActions';
 
-export const Note = observer(({ route, navigation }) => {
+export const Note = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
     const removeNoteHandler = () => {
         Alert.alert(
@@ -66,7 +64,7 @@ export const Note = observer(({ route, navigation }) => {
             </AppButton>
         </View>
     )
-})
+}))
 
 const styles = StyleSheet.create({
     container: { 

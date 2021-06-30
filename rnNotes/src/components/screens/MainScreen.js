@@ -7,7 +7,6 @@ import { AppMainTitle } from '../ui/AppMainTitle';
 import { NotesList } from '../screens/NotesList';
 
 export const MainScreen = observer(({ navigation }) => {
-
     return(
         <AppFormsContainer>
             <AppMainTitle>Главная</AppMainTitle>
