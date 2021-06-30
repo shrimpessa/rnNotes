@@ -10,11 +10,10 @@ import { AppText } from '../ui/AppText';
 import { AppButton } from '../ui/AppButton';
 import { TitleContainer } from '../ui/TitleContainer';
 
-import { APP_COLORS } from '../APP_COLORS';
-import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
-import { TEXT_STUBS } from '../TEXT_STUBS';
-import { formType_edit } from '../FORM_TYPES';
-import { getNoteByID } from '../../store/notesActions';
+import { APP_COLORS } from '../constants/APP_COLORS';
+import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
+import { TEXT_STUBS } from '../constants/TEXT_STUBS';
+import { FORM_TYPES } from '../constants/FORM_TYPES';
 
 export const Note = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
@@ -43,20 +42,20 @@ export const Note = inject('notesStore')(observer(({ route, navigation, notesSto
     return (
         <View style={styles.container}>
             <TitleContainer>
-                <AppMainTitle>{getNoteByID(route.params.noteID).title}</AppMainTitle>
+                <AppMainTitle>{notesStore.getNoteByID(route.params.noteID).title}</AppMainTitle>
                 <Icon 
                     name="create-outline" 
                     size={30} 
                     color={APP_COLORS.BROWN} 
                     onPress={() => navigation.navigate('CreateEdit', {
-                        formType: formType_edit,
+                        formType: FORM_TYPES.formType_edit,
                         noteID: route.params.noteID
                     })}
                 />
             </TitleContainer>
             <View style={styles.description}>
                 <AppText style={{fontSize: 16, margin: LAYOUT_BLANKS.outerPadding}}>
-                    {getNoteByID(route.params.noteID).body}
+                    {notesStore.getNoteByID(route.params.noteID).body}
                 </AppText>
             </View>
             <AppButton onPress={() => removeNoteHandler()}>

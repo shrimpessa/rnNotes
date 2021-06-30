@@ -15,17 +15,16 @@ import { AppCenteredContainer } from '../ui/AppCenteredContainer';
 import { NothingIsHere } from '../NothingIsHere';
 import { AppLoader } from '../ui/AppLoader';
 
-import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
-import { TEXT_STUBS } from '../TEXT_STUBS';
-import { getNotes } from '../../store/notesActions';
+import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
+import { TEXT_STUBS } from '../constants/TEXT_STUBS';
 
 export const NotesList = inject('notesStore')(observer(({ navigation, notesStore }) => {
 
-    const [isLoad, setIsLoad] = useState(false)
+    const [isLoad, setIsLoad] = useState(true)
 
     useEffect(() => {
         setIsLoad(false) // начало загрузки
-        getNotes()
+        notesStore.getNotes()
         setIsLoad(true) // конец загрузки
     }, [])
 

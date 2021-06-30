@@ -6,14 +6,14 @@ import { AppTextInput } from './ui/AppTextInput';
 import { AppButton } from './ui/AppButton';
 import { AppMainTitle } from './ui/AppMainTitle';
 import { AppFormsContainer } from './ui/AppFormsContainer';
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
+import { LAYOUT_BLANKS } from './constants/LAYOUT_BLANKS';
 import { AppCenteredContainer } from './ui/AppCenteredContainer';
-import { text_signIn, text_signUp } from './TEXT_STUBS';
+import { TEXT_STUBS } from './constants/TEXT_STUBS';
 
 export const SignUp = ({ isAuthorized, setLogin, setPassword, setConfirmedPassword, signUpHandler }) => {
     return (
         <AppFormsContainer>
-            <AppMainTitle>{isAuthorized ? text_signIn : text_signUp }</AppMainTitle>
+            <AppMainTitle>{isAuthorized ? TEXT_STUBS.text_signIn : TEXT_STUBS.text_signUp }</AppMainTitle>
             <AppCenteredContainer>
                 <AppTextInput
                     style={styles.inputs}

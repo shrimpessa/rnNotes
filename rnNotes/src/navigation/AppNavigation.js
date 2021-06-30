@@ -12,8 +12,8 @@ import { SignInSignUpScreen } from '../components/screens/SignInSignUpScreen';
 import { CreateEditScreen } from '../components/screens/CreateEditScreen';
 import { NotesList } from '../components/screens/NotesList';
 import { Note } from '../components/screens/Note';
-import { APP_COLORS } from '../components/APP_COLORS';
-import { LAYOUT_BLANKS } from '../components/LAYOUT_BLANKS';
+import { APP_COLORS } from '../components/constants/APP_COLORS';
+import { LAYOUT_BLANKS } from '../components/constants/LAYOUT_BLANKS';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();

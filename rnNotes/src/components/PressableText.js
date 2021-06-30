@@ -1,8 +1,8 @@
 import React from 'react';
 import { Pressable, View, StyleSheet } from 'react-native';
 
-import { APP_COLORS } from './APP_COLORS';
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
+import { APP_COLORS } from './constants/APP_COLORS';
+import { LAYOUT_BLANKS } from './constants/LAYOUT_BLANKS';
 import { AppText } from '../components/ui/AppText'
 
 export const PressableText = ({ onPress, onLongPress, content, description }) => {

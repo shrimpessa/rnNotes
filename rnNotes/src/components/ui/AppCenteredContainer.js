@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { APP_COLORS } from '../APP_COLORS';
+import { APP_COLORS } from '../constants/APP_COLORS';
 
 export const AppCenteredContainer = props => {
     return (

@@ -8,15 +8,15 @@ import { AppTextInput } from './ui/AppTextInput';
 import { AppMultilineTextInput } from './ui/AppMultilineTextInput';
 import { AppButton } from './ui/AppButton';
 
-import { LAYOUT_BLANKS } from './LAYOUT_BLANKS';
-import { formType_edit } from './FORM_TYPES';
-import { TEXT_STUBS } from './TEXT_STUBS';
+import { LAYOUT_BLANKS } from './constants/LAYOUT_BLANKS';
+import { FORM_TYPES } from './constants/FORM_TYPES';
+import { TEXT_STUBS } from './constants/TEXT_STUBS';
 
 export const CreateEditForm = ({ formType, onChangeName, onChangeText, saveHandler, noteName, noteText }) => {
     return (
         <AppFormsContainer>
             <AppMainTitle>
-                {formType === formType_edit 
+                {formType === FORM_TYPES.formType_edit 
                     ? TEXT_STUBS.text_editNote 
                     : TEXT_STUBS.text_createNote
                 }
@@ -43,7 +43,7 @@ export const CreateEditForm = ({ formType, onChangeName, onChangeText, saveHandl
                     onPress={() => saveHandler()}
                     btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 >
-                    {formType === formType_edit 
+                    {formType === FORM_TYPES.formType_edit 
                         ? TEXT_STUBS.text_saveChanges 
                         : TEXT_STUBS.text_add
                     }
