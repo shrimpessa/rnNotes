@@ -1,27 +1,24 @@
 // Экран для создания и редактирования заметки
 import React, { useState, useEffect } from 'react';
 import { View, Alert } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import { CreateEditForm } from '../CreateEditForm';
 
-import { APP_COLORS } from '../APP_COLORS';
-import { TEXT_STUBS } from '../TEXT_STUBS';
-import { formType_create, formType_edit } from '../FORM_TYPES';
+import { APP_COLORS } from '../constants/APP_COLORS';
+import { TEXT_STUBS } from '../constants/TEXT_STUBS';
+import { FORM_TYPES } from '../constants/FORM_TYPES';
 
-import { notesStore } from '../../store/notesStore';
-import { getNoteByID } from '../../store/notesActions';
-
-export const CreateEditScreen =  observer(({ route, navigation }) => {
+export const CreateEditScreen = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
     const [noteName, setNoteName] = useState('')
 	const [noteText, setNoteText] = useState('')
 
     useEffect(() => {
         // если требуется редактирование, получает поля по id заметки
-        if (route.params.formType === formType_edit) {
-            setNoteName(getNoteByID(route.params.noteID).title)
-            setNoteText(getNoteByID(route.params.noteID).body)
+        if (route.params.formType === FORM_TYPES.formType_edit) {
+            setNoteName(notesStore.getNoteByID(route.params.noteID).title)
+            setNoteText(notesStore.getNoteByID(route.params.noteID).body)
         }
     }, [])
 
@@ -49,7 +46,7 @@ export const CreateEditScreen =  observer(({ route, navigation }) => {
                 } символ(-ов).`
             )
         } else {
-            if (route.params.formType === formType_create) {
+            if (route.params.formType === FORM_TYPES.formType_create) {
                 notesStore.addNote({ noteName, noteText })
                 navigation.navigate('MainScreen')
                 Alert.alert(
@@ -78,4 +75,4 @@ export const CreateEditScreen =  observer(({ route, navigation }) => {
             />
         </View>
     )
-})
+}))

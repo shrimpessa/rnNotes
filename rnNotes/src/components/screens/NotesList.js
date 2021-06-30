@@ -1,6 +1,6 @@
 // Список всех заметок
 import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { 
     FlatList, 
     StyleSheet, 
@@ -15,19 +15,16 @@ import { AppCenteredContainer } from '../ui/AppCenteredContainer';
 import { NothingIsHere } from '../NothingIsHere';
 import { AppLoader } from '../ui/AppLoader';
 
-import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
-import { TEXT_STUBS } from '../TEXT_STUBS';
+import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
+import { TEXT_STUBS } from '../constants/TEXT_STUBS';
 
-import { notesStore } from '../../store/notesStore';
-import { getNotes } from '../../store/notesActions';
+export const NotesList = inject('notesStore')(observer(({ navigation, notesStore }) => {
 
-export const NotesList = observer(({ navigation }) => {
-
-    const [isLoad, setIsLoad] = useState(false)
+    const [isLoad, setIsLoad] = useState(true)
 
     useEffect(() => {
         setIsLoad(false) // начало загрузки
-        getNotes()
+        notesStore.getNotes()
         setIsLoad(true) // конец загрузки
     }, [])
 
@@ -88,7 +85,7 @@ export const NotesList = observer(({ navigation }) => {
             {renderHandler()}
         </View>
 	);
-})
+}))
 
 const styles = StyleSheet.create({
     list: {

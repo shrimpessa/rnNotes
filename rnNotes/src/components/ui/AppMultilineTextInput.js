@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { APP_COLORS } from '../APP_COLORS';
-import { LAYOUT_BLANKS } from '../LAYOUT_BLANKS';
+import { APP_COLORS } from '../constants/APP_COLORS';
+import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
 
 export const AppMultilineTextInput = props => {
     const styles = StyleSheet.create({

@@ -15,7 +15,7 @@ class Notes {
             count: computed
         })
     }
-    // получить список заметок
+    // Получить список заметок
     async getNotes() {
         try {
             const response = await link.get(`/tasks`)
@@ -25,21 +25,21 @@ class Notes {
             console.log(error.message)
         }
     }
-    // добавить новую заметку
+    // Добавить новую заметку
     async addNote(note) {
         try {
-            // temporary store
-            this.allNotes = [...this.allNotes, { ...note, id: Date.now() }]
             // back
             await link.post(`/tasks`, {
                 'title': note.noteName,
                 'body': note.noteText
             })
+            // получить обновленный список заметок
+            this.getNotes()
         } catch (error) {
             console.log(error.message)
         }
     }
-    // удалить заметку
+    // Удалить заметку
     async deleteNote(id) {
         // temporary store
         this.allNotes = this.allNotes.filter(note => note.id !== id)
@@ -50,28 +50,22 @@ class Notes {
             console.log(error.message)
         }
     }
-    // изменить заметку
+    // Изменить заметку
     async patchNote(id, newNoteName, newNoteText) {
         try {
-            // temporary store
-            this.allNotes.map(note => {
-                if (note.id === id) {
-                    note.noteName = newNoteName,
-                    note.noteText = newNoteText
-                }
-                return note
-            })
             // back
             await link.patch(`/tasks`, {
                 "title": newNoteName,
                 "body": newNoteText,
                 "id": id
             })
+            // получить обновленный список заметок
+            this.getNotes()
         } catch (error) {
             console.log(error.message)
         }
     }
-    // получить заметку по id
+    // Получить заметку по id
     getNoteByID(id) {
         const thisNote = this.allNotes.filter(note => {
             if (note.id === id) {
@@ -79,12 +73,6 @@ class Notes {
             }
         })
         return thisNote[0]
-        // try {
-        //     const response = await link.get(`/tasks/${id}`)
-        //     return response.data
-        // } catch (error) {
-        //     console.log(error.message)
-        // }
     }
     // получить количество заметок
     get count() {
