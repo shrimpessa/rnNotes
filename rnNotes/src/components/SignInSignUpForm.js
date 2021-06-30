@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Dimensions, Alert } from 'react-native';
 
-import { notesStore } from '../store/usersStore';
 import { AppTextInput } from './ui/AppTextInput';
 import { AppButton } from './ui/AppButton';
 import { AppMainTitle } from './ui/AppMainTitle';
@@ -10,7 +9,14 @@ import { LAYOUT_BLANKS } from './constants/LAYOUT_BLANKS';
 import { AppCenteredContainer } from './ui/AppCenteredContainer';
 import { TEXT_STUBS } from './constants/TEXT_STUBS';
 
-export const SignUp = ({ isAuthorized, setLogin, setPassword, setConfirmedPassword, signUpHandler }) => {
+export const SignInSignUpForm = ({ 
+    formType, 
+    isAuthorized, 
+    onChangeUsername, 
+    onChangePassword, 
+    onChangeConfirmedPassword, 
+    signHandler 
+}) => {
     return (
         <AppFormsContainer>
             <AppMainTitle>{isAuthorized ? TEXT_STUBS.text_signIn : TEXT_STUBS.text_signUp }</AppMainTitle>
@@ -18,25 +24,25 @@ export const SignUp = ({ isAuthorized, setLogin, setPassword, setConfirmedPasswo
                 <AppTextInput
                     style={styles.inputs}
                     placeholder='Логин'
-                    onChangeText={login => setLogin(login)}
+                    onChangeText={login => onChangeUsername(login)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
                 <AppTextInput
                     style={styles.inputs}
                     placeholder='Пароль'
-                    onChangeText={password => setPassword(password)}
+                    onChangeText={password => onChangePassword(password)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
                 <AppTextInput
                     style={styles.inputs}
                     placeholder='Пароль еще раз'
-                    onChangeText={confirmedPassword => setConfirmedPassword(confirmedPassword)}
+                    onChangeText={confirmedPassword => onChangeConfirmedPassword(confirmedPassword)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
             </AppCenteredContainer>
             <View style={styles.buttons}>
                 <AppButton
-                    onPress={() => signUpHandler()}
+                    onPress={() => signHandler()}
                     btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 >
                     Зарегистрироваться

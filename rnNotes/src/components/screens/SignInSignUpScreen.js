@@ -4,21 +4,40 @@ import { observer } from 'mobx-react';
 
 import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
 import { APP_COLORS } from '../constants/APP_COLORS';
-import { SignUp } from '../SignUp';
+import { SignInSignUpForm } from '../SignInSignUpForm';
 
 export const SignInSignUpScreen = observer(({ navigation }) => {
 
     const [isAuthorized, setIsAuthorized] = useState(false)
 
-    const [login, setLogin] = useState('')
+    const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
     const [confirmedPassword, setConfirmedPassword] = useState('')
+
+    const onChangeUsername = (username) => {
+        setUsername(username)
+    }
+
+    const onChangePassword = (pass) => {
+        setPassword(pass)
+    }
+
+    const onChangeConfirmedPassword = (pass) => {
+        setConfirmedPassword(pass)
+    }
+
+    const signHandler = () => {
+
+    }
    
     return (
         <View style={{ backgroundColor: APP_COLORS.WHITE, height: '100%'}}>
             <SignUp 
                 isAuthorized={isAuthorized} 
-                // setLogin={setLogin(setLogin)}
+                onChangeUsername={onChangeUsername}
+                onChangePassword={onChangePassword}
+                onChangeConfirmedPassword={onChangeConfirmedPassword}
+                signHandler={signHandler}
             />
         </View>
     )
