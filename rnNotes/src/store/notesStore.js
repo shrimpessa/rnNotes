@@ -1,8 +1,10 @@
 import { makeObservable, observable, computed, action } from 'mobx';
 import link from '../API_CONNECT';
+import { usersStore } from './usersStore';
 
 class Notes {
     allNotes = []
+    awf = undefined
 
     constructor() {
         makeObservable(this, {
@@ -28,11 +30,14 @@ class Notes {
     // Добавить новую заметку
     async addNote(note) {
         try {
+            console.log(usersStore.token)
+            console.log(note)
             // back
             await link.post(`/tasks`, {
                 'title': note.noteName,
                 'body': note.noteText
             })
+
             // получить обновленный список заметок
             this.getNotes()
         } catch (error) {

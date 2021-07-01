@@ -15,7 +15,7 @@ export const CreateEditScreen = inject('notesStore')(observer(({ route, navigati
 	const [noteText, setNoteText] = useState('')
 
     useEffect(() => {
-        // если требуется редактирование, получает поля по id заметки
+        // если требуется редактирование, получаем поля по id заметки
         if (route.params.formType === FORM_TYPES.formType_edit) {
             setNoteName(notesStore.getNoteByID(route.params.noteID).title)
             setNoteText(notesStore.getNoteByID(route.params.noteID).body)
