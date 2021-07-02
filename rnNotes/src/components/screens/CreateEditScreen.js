@@ -47,17 +47,9 @@ export const CreateEditScreen = inject('notesStore')(observer(({ route, navigati
             )
         } else {
             if (route.params.formType === FORM_TYPES.formType_create) {
-                notesStore.addNote({ noteName, noteText })
-                navigation.navigate('MainScreen')
-                Alert.alert(
-                    TEXT_STUBS.text_noteAdded
-                )
+                notesStore.addNote({ noteName, noteText }, navigation)
             } else {
-                notesStore.patchNote( route.params.noteID, noteName, noteText )
-                navigation.navigate('MainScreen')
-                Alert.alert(
-                    TEXT_STUBS.text_changesSaved
-                )
+                notesStore.patchNote(route.params.noteID, noteName, noteText, navigation)
             }
             
         }

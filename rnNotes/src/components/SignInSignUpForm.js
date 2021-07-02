@@ -8,18 +8,20 @@ import { AppFormsContainer } from './ui/AppFormsContainer';
 import { LAYOUT_BLANKS } from './constants/LAYOUT_BLANKS';
 import { AppCenteredContainer } from './ui/AppCenteredContainer';
 import { TEXT_STUBS } from './constants/TEXT_STUBS';
+import { FORM_TYPES } from './constants/FORM_TYPES';
 
 export const SignInSignUpForm = ({ 
-    formType, 
-    isAuthorized, 
+    formType,
     onChangeUsername, 
+    onChangeEmail,
     onChangePassword, 
     onChangeConfirmedPassword, 
-    signHandler 
+    authorizeHandler,
+    registrationHandler
 }) => {
     return (
         <AppFormsContainer>
-            <AppMainTitle>{isAuthorized ? TEXT_STUBS.text_signIn : TEXT_STUBS.text_signUp }</AppMainTitle>
+            <AppMainTitle>{formType === FORM_TYPES.formType_signUp ? TEXT_STUBS.text_signUp : TEXT_STUBS.text_signIn }</AppMainTitle>
             <AppCenteredContainer>
                 <AppTextInput
                     style={styles.inputs}
@@ -27,26 +29,50 @@ export const SignInSignUpForm = ({
                     onChangeText={login => onChangeUsername(login)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
+                {formType === FORM_TYPES.formType_signUp 
+                    ? <AppTextInput
+                        style={styles.inputs}
+                        placeholder='Почта'
+                        onChangeText={
+                            email => onChangeEmail(email)
+                        }
+                        inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
+                    />
+                    : null
+                }
                 <AppTextInput
                     style={styles.inputs}
                     placeholder='Пароль'
                     onChangeText={password => onChangePassword(password)}
                     inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
                 />
-                <AppTextInput
-                    style={styles.inputs}
-                    placeholder='Пароль еще раз'
-                    onChangeText={confirmedPassword => onChangeConfirmedPassword(confirmedPassword)}
-                    inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
-                />
+                {formType === FORM_TYPES.formType_signUp 
+                    ? <AppTextInput
+                        style={styles.inputs}
+                        placeholder='Пароль еще раз'
+                        onChangeText={
+                            confirmedPassword => onChangeConfirmedPassword(confirmedPassword)
+                        }
+                        inputWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
+                    />
+                    : null
+                }
             </AppCenteredContainer>
             <View style={styles.buttons}>
-                <AppButton
-                    onPress={() => signHandler()}
-                    btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
-                >
-                    Зарегистрироваться
-                </AppButton>
+                {formType === FORM_TYPES.formType_signUp 
+                    ? <AppButton
+                        onPress={() => registrationHandler()}
+                        btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
+                    >
+                        {TEXT_STUBS.text_signUp}
+                    </AppButton>
+                    : <AppButton
+                        onPress={() => authorizeHandler()}
+                        btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}
+                    >
+                        {TEXT_STUBS.text_signIn}
+                    </AppButton>
+                }
             </View>
         </AppFormsContainer>
     )

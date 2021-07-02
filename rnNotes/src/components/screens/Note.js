@@ -31,7 +31,7 @@ export const Note = inject('notesStore')(observer(({ route, navigation, notesSto
                 style: "destructive",
                 onPress: () => {
                     navigation.navigate('MainScreen')
-                    notesStore.deleteNote(route.params.noteID)
+                    notesStore.deleteNote(route.params.noteID, navigation)
                 },
               },
             ],

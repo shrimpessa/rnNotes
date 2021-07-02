@@ -14,6 +14,7 @@ import { NotesList } from '../components/screens/NotesList';
 import { Note } from '../components/screens/Note';
 import { APP_COLORS } from '../components/constants/APP_COLORS';
 import { LAYOUT_BLANKS } from '../components/constants/LAYOUT_BLANKS';
+import { FORM_TYPES } from '../components/constants/FORM_TYPES';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -68,7 +69,34 @@ export const AppNavigation = ({ navigation }) => {
 
     createLogInStack = () => (
         <Stack.Navigator>
-            <Stack.Screen name="Вход" component={SignInSignUpScreen} />
+            <Stack.Screen 
+                name="SignIn" 
+                component={SignInSignUpScreen} 
+                options={({ navigation }) => ({
+                    title: "Вход",
+                    headerRight: () => (
+                        <Icon 
+                            name="person-add-outline" 
+                            size={30} 
+                            color={APP_COLORS.BROWN} 
+                            style={{
+                                paddingRight: LAYOUT_BLANKS.outerPadding
+                            }}
+                            onPress={() => navigation.navigate('SignUp', {
+                                formType: FORM_TYPES.formType_signUp,
+                            })}
+                        />
+                     )
+                   }
+                )}
+            />
+            <Stack.Screen 
+                name="SignUp" 
+                component={SignInSignUpScreen} 
+                options={{
+                    title: "Регистрация"
+                }}
+            />
         </Stack.Navigator>
     ) 
 
@@ -86,8 +114,9 @@ export const AppNavigation = ({ navigation }) => {
                     name="LogIn" 
                     children={createLogInStack} 
                     options={{
-                        title: "Войти"
+                        title: "Вход"
                     }}
+                    // initialParams={{ formType: FORM_TYPES.formType_signIn }}
                 />
             </Drawer.Navigator>
         </NavigationContainer>

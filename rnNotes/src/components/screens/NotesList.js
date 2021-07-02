@@ -17,7 +17,6 @@ import { AppLoader } from '../ui/AppLoader';
 
 import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
 import { TEXT_STUBS } from '../constants/TEXT_STUBS';
-import { API_KEY } from '../../API_KEY';
 
 export const NotesList = inject('notesStore')(observer(({ navigation, notesStore }) => {
 
@@ -42,7 +41,7 @@ export const NotesList = inject('notesStore')(observer(({ navigation, notesStore
                 text: "Удалить",                
                 style: "destructive",
                 onPress: () => {
-                    notesStore.deleteNote(id)
+                    notesStore.deleteNote(id, navigation)
                 },
               },
             ],

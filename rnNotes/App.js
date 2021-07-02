@@ -9,7 +9,7 @@ import { usersStore } from './src/store/usersStore';
 export default function App() {
 
   const stores = { notesStore, usersStore }
-
+  // AnfpOyNFCgPppUucgne9WKh8oelftXVw3B99zZEPf6WDRQ15ujbS2jInGUxmAfwC
   const storeToken = async () => {
     try {
       await AsyncStorage.setItem('@token', '')

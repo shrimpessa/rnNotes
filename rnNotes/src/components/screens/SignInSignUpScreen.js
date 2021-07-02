@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { observer, inject } from 'mobx-react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AppButton } from '../ui/AppButton';
+import { AppAlert } from '../ui/AppAlert';
+
 import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
 import { APP_COLORS } from '../constants/APP_COLORS';
 import { SignInSignUpForm } from '../SignInSignUpForm';
-import { FORM_TYPES } from '../constants/FORM_TYPES';
 
-export const SignInSignUpScreen = inject('usersStore', 'notesStore')(observer(({ navigation, usersStore, notesStore }) => {
+export const SignInSignUpScreen = inject('usersStore')(observer(({ navigation, route, usersStore }) => {
 
     const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
     const [confirmedPassword, setConfirmedPassword] = useState('')
 
     const onChangeUsername = (username) => {
         setUsername(username)
-        
+    }
+
+    const onChangeEmail = (email) => {
+        setEmail(email)
     }
 
     const onChangePassword = (pass) => {
@@ -28,15 +32,27 @@ export const SignInSignUpScreen = inject('usersStore', 'notesStore')(observer(({
         setConfirmedPassword(pass)
     }
 
+    const authorizeHandler = () => {
+        usersStore.authorizeUser(username, password, navigation)
+    }
+    
+    const registrationHandler = () => {
+        if (username === '' || email === '' || password === '') {
+            AppAlert('Все поля должны быть заполнены!')
+        } else if (password !== confirmedPassword) {
+            AppAlert('Пароли не совпадают!')
+        } else {
+            usersStore.createUser(username, email, password, navigation)
+        }
+        // usersStore.createUser('user999', 'mailmail@gmail.com', '123', navigation)
+    }
+
     const renderHandler = () => {
-        let isAuthorized = false
         // Проверка на авторизованность пользователя
-        usersStore.isTokenExists().then((result) => {
-            isAuthorized = result
-        })
+        usersStore.isTokenExists()
         
         // Если авторизован, предложить сменить аккаунт
-        if (isAuthorized) {
+        if (usersStore.isAuthorized) {
             return (
                 <View style={{ alignItems: 'center' }}>
                     <AppButton
@@ -49,14 +65,14 @@ export const SignInSignUpScreen = inject('usersStore', 'notesStore')(observer(({
             )
         // Иначе предложить войти
         } else {
-            usersStore.authorizeUser('user999', '123')
-            
             return <SignInSignUpForm 
-                formType={FORM_TYPES.formType_signUp}
-                isAuthorized={isAuthorized} 
+                formType={route.params?.formType}
                 onChangeUsername={onChangeUsername}
+                onChangeEmail={onChangeEmail}
                 onChangePassword={onChangePassword}
                 onChangeConfirmedPassword={onChangeConfirmedPassword}
+                authorizeHandler={authorizeHandler}
+                registrationHandler={registrationHandler}
             />
         }
     }
@@ -67,12 +83,3 @@ export const SignInSignUpScreen = inject('usersStore', 'notesStore')(observer(({
         </View>
     )
 }))
-
-const styles = StyleSheet.create({
-    inputs: {
-        marginBottom: LAYOUT_BLANKS.innerPadding
-    },
-    buttons: {
-        alignItems: 'center'
-    }
-})
