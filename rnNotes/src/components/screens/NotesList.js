@@ -14,6 +14,7 @@ import { PressableText } from '../PressableText';
 import { AppCenteredContainer } from '../ui/AppCenteredContainer';
 import { NothingIsHere } from '../NothingIsHere';
 import { AppLoader } from '../ui/AppLoader';
+import { AppAlert } from '../ui/AppAlert';
 
 import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
 import { TEXT_STUBS } from '../constants/TEXT_STUBS';
@@ -29,7 +30,7 @@ export const NotesList = inject('notesStore')(observer(({ navigation, notesStore
     }, [])
 
     const removeNoteHandler = id => {
-        Alert.alert(
+        AppAlert(
             TEXT_STUBS.text_deleteNote,
             TEXT_STUBS.text_confirmDeletion,
             [
@@ -41,12 +42,12 @@ export const NotesList = inject('notesStore')(observer(({ navigation, notesStore
                 text: "Удалить",                
                 style: "destructive",
                 onPress: () => {
-                    notesStore.deleteNote(id)
+                    notesStore.deleteNote(id, navigation)
                 },
               },
             ],
             { cancelable: false }
-        );
+        )
     }
 
     const notesList = (

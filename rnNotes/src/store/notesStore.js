@@ -1,5 +1,9 @@
 import { makeObservable, observable, computed, action } from 'mobx';
 import link from '../API_CONNECT';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TEXT_STUBS } from '../components/constants/TEXT_STUBS';
+import { AppAlert } from '../components/ui/AppAlert';
+import { usersStore } from './usersStore';
 
 class Notes {
     allNotes = []
@@ -7,6 +11,7 @@ class Notes {
     constructor() {
         makeObservable(this, {
             allNotes: observable,
+            setAllNotes: action,
             getNotes: action,
             addNote: action,
             deleteNote: action,
@@ -15,54 +20,101 @@ class Notes {
             count: computed
         })
     }
+    // Обновить список заметок
+    setAllNotes(notes) {
+        this.allNotes = notes
+    }
     // Получить список заметок
     async getNotes() {
         try {
-            const response = await link.get(`/tasks`)
-            this.allNotes = response.data // WARN [MobX] Since strict-mode is enabled, changing (observed) observable values without using an action is not allowed. Tried to modify: Notes@3.allNotes
-            return response.data
+            const response = await link.get(`/tasks`, {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
+            })
+            this.setAllNotes(response.data)
         } catch (error) {
-            console.log(error.message)
+            console.log('getNotes: ' + error)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
         }
     }
     // Добавить новую заметку
-    async addNote(note) {
+    async addNote(note, navigation) {
         try {
-            // back
+            console.log(usersStore.isAuthorized)
             await link.post(`/tasks`, {
                 'title': note.noteName,
                 'body': note.noteText
+            },
+            {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
             })
-            // получить обновленный список заметок
-            this.getNotes()
+            this.getNotes() // получить обновленный список заметок
+            AppAlert(
+                TEXT_STUBS.text_noteAdded
+            )
+            navigation.navigate('MainScreen')
         } catch (error) {
-            console.log(error.message)
+            console.log('addNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
+            navigation.navigate('MainScreen')
         }
     }
     // Удалить заметку
     async deleteNote(id) {
-        // temporary store
         this.allNotes = this.allNotes.filter(note => note.id !== id)
-        // back
         try {
-            await link.delete(`/tasks/${id}`)
+            await link.delete(`/tasks/${id}`, {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
+            })
+            AppAlert(
+                TEXT_STUBS.text_deleteNote,
+                TEXT_STUBS.text_noteDeleted
+            )
         } catch (error) {
-            console.log(error.message)
+            console.log('deleteNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
         }
     }
     // Изменить заметку
-    async patchNote(id, newNoteName, newNoteText) {
+    async patchNote(id, newNoteName, newNoteText, navigation) {
         try {
-            // back
             await link.patch(`/tasks`, {
                 "title": newNoteName,
                 "body": newNoteText,
                 "id": id
+            },
+            {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
             })
-            // получить обновленный список заметок
-            this.getNotes()
+            this.getNotes() // получить обновленный список заметок
+            navigation.navigate('MainScreen')
+            AppAlert(
+                TEXT_STUBS.text_editNote,
+                TEXT_STUBS.text_changesSaved
+            )
         } catch (error) {
-            console.log(error.message)
+            console.log('patchNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
+            navigation.navigate('MainScreen')
         }
     }
     // Получить заметку по id
@@ -74,7 +126,7 @@ class Notes {
         })
         return thisNote[0]
     }
-    // получить количество заметок
+    // Получить количество заметок
     get count() {
         return this.allNotes.length
     }
