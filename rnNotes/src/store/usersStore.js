@@ -39,22 +39,20 @@ class Users {
                 'username': username,
                 'password': password
             })
-            .catch(error => {
-                console.log('message: ' + error.response.status)
-                AppAlert(
-                    TEXT_STUBS.text_authorisation_error, 
-                    TEXT_STUBS.text_wrongPasswordOrUsername
-                )
-            })
             await AsyncStorage.setItem('@token', result.data.id)
+            this.setIsAuthorized(true) // подтвердить авторизацию
+            notesStore.getNotes() // получить обновленный список заметок
+            navigation.navigate('MainScreen')
             AppAlert(
                 TEXT_STUBS.text_success,
                 TEXT_STUBS.text_successfullAuthorization
             )
-            navigation.navigate('MainScreen')
-            notesStore.getNotes()
         } catch (error) {
-            console.log(error.message)
+            console.log('authorizeUser: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_wrongPasswordOrUsername
+            )
         }
     }
     // Создание нового пользователя
@@ -65,26 +63,24 @@ class Users {
                 'email': email,
                 'password': password
             })
-            .catch(error => {
-                console.log('message: ' + error)
-                AppAlert(
-                    TEXT_STUBS.text_failure, 
-                    TEXT_STUBS.text_failureUserAlreadyExist
-                )
-            })
             AppAlert(
                 TEXT_STUBS.text_success,
                 TEXT_STUBS.text_successCreateNewUser
             )
             navigation.navigate('SignIn')
         } catch (error) {
-            console.log(error.message)
+            console.log('createUser: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_failure, 
+                TEXT_STUBS.text_failureUserAlreadyExist
+            )
         }
     }
 
     // Получить список пользователей
     async logOut() {
         await AsyncStorage.setItem('@token', '')
+        this.setIsAuthorized(false)
     }
 }
 

@@ -4,6 +4,7 @@ export const TEXT_STUBS = {
     text_createNote: "Создание заметки",
     text_editNote: "Редактирование заметки", 
     text_deleteNote: "Удаление заметки", 
+    text_noteDeleted: "Заметка удалена.",
     text_confirmDeletion: "Вы точно хотите удалить эту заметку?", 
     text_add: "Добавить",
     text_saveChanges: "Сохранить изменения",
@@ -14,7 +15,7 @@ export const TEXT_STUBS = {
     text_notLoggedUser: "Вы не вошли в свой аккаунт.",
     text_failure: "Ошибка!",
     text_failureUserAlreadyExist: "Пользователь с такими данными уже существует!",
-    text_success: "Успех!",
+    text_success: "Отлично!",
     text_successfullAuthorization: "Теперь вы можете просматривать заметки.",
     text_successCreateNewUser: "Вы зарегистрировались."
 }

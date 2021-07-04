@@ -9,6 +9,7 @@ import { AppMainTitle } from '../ui/AppMainTitle';
 import { AppText } from '../ui/AppText';
 import { AppButton } from '../ui/AppButton';
 import { TitleContainer } from '../ui/TitleContainer';
+import { AppAlert } from '../ui/AppAlert';
 
 import { APP_COLORS } from '../constants/APP_COLORS';
 import { LAYOUT_BLANKS } from '../constants/LAYOUT_BLANKS';
@@ -18,7 +19,7 @@ import { FORM_TYPES } from '../constants/FORM_TYPES';
 export const Note = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
     const removeNoteHandler = () => {
-        Alert.alert(
+        AppAlert(
             TEXT_STUBS.text_deleteNote,
             TEXT_STUBS.text_confirmDeletion,
             [
@@ -36,7 +37,7 @@ export const Note = inject('notesStore')(observer(({ route, navigation, notesSto
               },
             ],
             { cancelable: false }
-        );
+        )
     }
 
     return (

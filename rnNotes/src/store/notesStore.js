@@ -20,60 +20,52 @@ class Notes {
             count: computed
         })
     }
-
+    // Обновить список заметок
     setAllNotes(notes) {
         this.allNotes = notes
     }
-
     // Получить список заметок
     async getNotes() {
         try {
-            await link.get(`/tasks`, {
+            const response = await link.get(`/tasks`, {
                 headers: {
                     access_token: await AsyncStorage.getItem('@token')
                 }
             })
-            .then(response => {
-                console.log('res: ' + response.data)
-                this.setAllNotes(response.data)})
-            .catch(error => {
-                console.log('message: ' + error.response.status)
-                AppAlert(
-                    TEXT_STUBS.text_authorisation_error, 
-                    TEXT_STUBS.text_notLoggedUser
-                )
-            })
+            this.setAllNotes(response.data)
         } catch (error) {
-            console.log(error.message)
+            console.log('getNotes: ' + error)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
         }
     }
     // Добавить новую заметку
     async addNote(note, navigation) {
         try {
             console.log(usersStore.isAuthorized)
-            !usersStore.isAuthorized 
-                // сделать запрос, если пользователь авторизован
-                ? await link.post(`/tasks`, {
-                    'title': note.noteName,
-                    'body': note.noteText
-                },
-                {
-                    headers: {
-                        access_token: await AsyncStorage.getItem('@token')
-                    }
-                })
-                .then(
-                    AppAlert(
-                        TEXT_STUBS.text_noteAdded
-                    ),
-                    navigation.navigate('MainScreen')
-                )
-                // иначе перевести на главный экран (алерт об ошибке)
-                : navigation.navigate('MainScreen')
-            // получить обновленный список заметок
-            this.getNotes()
+            await link.post(`/tasks`, {
+                'title': note.noteName,
+                'body': note.noteText
+            },
+            {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
+            })
+            this.getNotes() // получить обновленный список заметок
+            AppAlert(
+                TEXT_STUBS.text_noteAdded
+            )
+            navigation.navigate('MainScreen')
         } catch (error) {
-            console.log(error.message)
+            console.log('addNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
+            navigation.navigate('MainScreen')
         }
     }
     // Удалить заметку
@@ -85,42 +77,44 @@ class Notes {
                     access_token: await AsyncStorage.getItem('@token')
                 }
             })
-            .catch(error => {
-                console.log('message: ' + error.response.status)
-                AppAlert(
-                    TEXT_STUBS.text_authorisation_error, 
-                    TEXT_STUBS.text_notLoggedUser
-                )
-            })
+            AppAlert(
+                TEXT_STUBS.text_deleteNote,
+                TEXT_STUBS.text_noteDeleted
+            )
         } catch (error) {
-            console.log(error.message)
+            console.log('deleteNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
         }
     }
     // Изменить заметку
     async patchNote(id, newNoteName, newNoteText, navigation) {
         try {
-            !usersStore.isAuthorized
-                ? await link.patch(`/tasks`, {
-                    "title": newNoteName,
-                    "body": newNoteText,
-                    "id": id
-                },
-                {
-                    headers: {
-                        access_token: await AsyncStorage.getItem('@token')
-                    }
-                })
-                .then(
-                    AppAlert(
-                        TEXT_STUBS.text_editNote
-                    ),
-                    navigation.navigate('MainScreen')
-                )
-                : navigation.navigate('MainScreen')
-            // получить обновленный список заметок
-            this.getNotes()
+            await link.patch(`/tasks`, {
+                "title": newNoteName,
+                "body": newNoteText,
+                "id": id
+            },
+            {
+                headers: {
+                    access_token: await AsyncStorage.getItem('@token')
+                }
+            })
+            this.getNotes() // получить обновленный список заметок
+            navigation.navigate('MainScreen')
+            AppAlert(
+                TEXT_STUBS.text_editNote,
+                TEXT_STUBS.text_changesSaved
+            )
         } catch (error) {
-            console.log(error.message)
+            console.log('patchNote: ' + error.message)
+            AppAlert(
+                TEXT_STUBS.text_authorisation_error, 
+                TEXT_STUBS.text_notLoggedUser
+            )
+            navigation.navigate('MainScreen')
         }
     }
     // Получить заметку по id
@@ -132,7 +126,7 @@ class Notes {
         })
         return thisNote[0]
     }
-    // получить количество заметок
+    // Получить количество заметок
     get count() {
         return this.allNotes.length
     }

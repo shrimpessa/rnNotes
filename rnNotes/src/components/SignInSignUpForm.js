@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 
 import { AppTextInput } from './ui/AppTextInput';
 import { AppButton } from './ui/AppButton';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Dimensions } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
@@ -32,7 +32,7 @@ export const SignInSignUpScreen = inject('usersStore')(observer(({ navigation, r
         setConfirmedPassword(pass)
     }
 
-    const authorizeHandler = () => {
+    const authorizeHandler = async () => {
         usersStore.authorizeUser(username, password, navigation)
     }
     
@@ -44,17 +44,15 @@ export const SignInSignUpScreen = inject('usersStore')(observer(({ navigation, r
         } else {
             usersStore.createUser(username, email, password, navigation)
         }
-        // usersStore.createUser('user999', 'mailmail@gmail.com', '123', navigation)
     }
 
     const renderHandler = () => {
         // Проверка на авторизованность пользователя
         usersStore.isTokenExists()
-        
         // Если авторизован, предложить сменить аккаунт
         if (usersStore.isAuthorized) {
             return (
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center', paddingTop: LAYOUT_BLANKS.innerPadding }}>
                     <AppButton
                         onPress={() => usersStore.logOut()}
                         btnWidth={Dimensions.get('window').width * LAYOUT_BLANKS.widthEntire}

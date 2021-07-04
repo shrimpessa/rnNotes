@@ -8,6 +8,7 @@ import { CreateEditForm } from '../CreateEditForm';
 import { APP_COLORS } from '../constants/APP_COLORS';
 import { TEXT_STUBS } from '../constants/TEXT_STUBS';
 import { FORM_TYPES } from '../constants/FORM_TYPES';
+import { AppAlert } from '../ui/AppAlert';
 
 export const CreateEditScreen = inject('notesStore')(observer(({ route, navigation, notesStore }) => {
 
@@ -32,15 +33,15 @@ export const CreateEditScreen = inject('notesStore')(observer(({ route, navigati
 
     const saveHandler = () => {
         if (noteName.trim().length < 3) {
-            Alert.alert(
-                "Ошибка!", 
+            AppAlert(
+                TEXT_STUBS.text_failure,
                 `Минимальная длина заголовка 3 символа. Вы ввели ${
                     noteName.trim().length
                 } символ(-ов).`
             )
         } else if (noteText.trim().length < 3) {
-            Alert.alert(
-                "Ошибка!", 
+            AppAlert(
+                TEXT_STUBS.text_failure,
                 `Минимальная длина текста заметки 3 символа. Вы ввели ${
                     noteText.trim().length
                 } символ(-ов).`
